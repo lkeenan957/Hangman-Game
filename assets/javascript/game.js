@@ -90,9 +90,15 @@ document.addEventListener("keyup", function(event){
   }
 
   //trying to get a music when the entire word is complete
-   if(wordBlanks){
-     congratsAudio.play();
-   }
+
+   function checkWin() {
+     if (wordBlanks.indexOf('_') === -1) {
+    alert('You Won!');
+    congratsAudio.play();
+  } else if (allowedGuesses === 0) {
+    alert('You Lost!');
+  }
+
 
 
   guessedLettersDOM.innerHTML = wrongGuesses;
