@@ -15,7 +15,7 @@ console.log(guessesRemainingDOM);
 var guessedLettersDOM = document.getElementById("guessedLetters");
 console.log(guessedLettersDOM);
 
-var hangmanWords = ["monkey", "donkey", "lion", "cat", "dog", "puppy"];
+var hangmanWords = ["washington", "jefferson", "madison", "jackson", "obama", "abraham", "roosevelt", "kennedy", "reagan", "bush"];
 console.log(hangmanWords, hangmanWords.length);
 
 //filter() method creates a new array with all elements that pass the test implemented by the provided function.
@@ -57,6 +57,8 @@ function initializeGame(){
   allowedGuesses = 12;
   wrongGuesses = [];
   correctGuesses = [];
+  guessedLettersDOM.innerHTML = wrongGuesses;
+  guessesRemainingDOM.innerHTML = allowedGuesses;
   setWordToBeGuessed();
   // document.write("Press any key to get started!");
 };
@@ -84,26 +86,33 @@ document.addEventListener("keyup", function(event){
 
   if(!wrongGuesses.includes(userGuess))
   {
-    allowedGuesses = allowedGuesses - 1;
-    console.log(allowedGuesses);
-    wrongGuesses.push(userGuess);
+    if (allowedGuesses != -1) {
+      allowedGuesses = allowedGuesses - 1;
+      console.log(allowedGuesses);
+      wrongGuesses.push(userGuess);
+      guessedLettersDOM.innerHTML = wrongGuesses;
+      guessesRemainingDOM.innerHTML = allowedGuesses;
+    }
   }
 
   //trying to get a music when the entire word is complete
+   // if(wordBlanks){
+   //   congratsAudio.play();
+   // }
 
    function checkWin() {
-     if (wordBlanks.indexOf('_') === -1) {
-    alert('You Won!');
-    congratsAudio.play();
-  } else if (allowedGuesses === 0) {
-    alert('You Lost!');
-  }
-
-
-
-  guessedLettersDOM.innerHTML = wrongGuesses;
-  guessesRemainingDOM.innerHTML = allowedGuesses;
-
+      if (wordBlanks.indexOf('_') === -1) {
+        alert('You Won!');
+        setTimeout(congrats, 3000)
+        function congrats() {
+          congratsAudio.play();
+        }
+      } else if (allowedGuesses === 0) {
+        alert('You Lost!');
+        initializeGame()
+      }
+    }
+    checkWin()
 
   if (currentWord.join('') == wordBlanks.join('')) {
     initializeGame()
@@ -115,3 +124,32 @@ document.addEventListener("keyup", function(event){
 
 
 initializeGame();
+
+
+
+
+/*
+
+function setTimeout(function, time) {
+  function();
+}
+
+
+
+-------------------------------
+
+
+
+event loop
+  var event =  []
+  user clicks a button
+  event.push(button)
+
+
+
+
+
+
+
+
+*/
